@@ -294,16 +294,16 @@ onAuthStateChanged(auth, (user) => {
 // ========== FIRESTORE FUNCTIONS ==========
 
 // Load notes for current user with real-time updates
+// Load notes for current user with real-time updates - UPDATED
 function loadNotes() {
     if (!currentUser) return;
 
     showLoading();
     
-    // Create query for user's notes
+    // Create query for user's notes (removed orderBy temporarily)
     const notesQuery = query(
         collection(db, 'notes'),
-        where('userId', '==', currentUser.uid),
-        orderBy('createdAt', 'desc')
+        where('userId', '==', currentUser.uid)
     );
 
     // Set up real-time listener
@@ -315,11 +315,20 @@ function loadNotes() {
                 ...doc.data()
             });
         });
+        
+        // Sort manually by createdAt
+        allNotes.sort((a, b) => {
+            const dateA = a.createdAt instanceof Date ? a.createdAt : new Date(a.createdAt);
+            const dateB = b.createdAt instanceof Date ? b.createdAt : new Date(b.createdAt);
+            return dateB - dateA;
+        });
+        
         displayNotes(allNotes);
         hideLoading();
     }, (error) => {
         console.error('Error loading notes:', error);
-        showToast('Failed to load notes');
+        console.error('Error code:', error.code);
+        showToast('Failed to load notes: ' + error.message);
         hideLoading();
     });
 }
@@ -397,9 +406,20 @@ function createNoteCard(note) {
 }
 
 // Format date to readable string
+// Format date to readable string - UPDATED
 function formatDate(date) {
+    // Handle both Firestore Timestamp and plain Date objects
+    let actualDate;
+    if (date && date.toDate) {
+        actualDate = date.toDate();
+    } else if (date instanceof Date) {
+        actualDate = date;
+    } else {
+        return 'Just now';
+    }
+
     const now = new Date();
-    const diff = now - date;
+    const diff = now - actualDate;
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -410,7 +430,7 @@ function formatDate(date) {
     if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
     if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
     
-    return date.toLocaleDateString('en-US', { 
+    return actualDate.toLocaleDateString('en-US', { 
         year: 'numeric', 
         month: 'short', 
         day: 'numeric' 
@@ -425,22 +445,35 @@ function escapeHtml(text) {
 }
 
 // Add new note
+// Add new note - UPDATED VERSION
 async function addNote(title, content) {
-    if (!currentUser) return;
+    if (!currentUser) {
+        showToast('Please log in first');
+        return;
+    }
 
     showLoading();
     try {
-        await addDoc(collection(db, 'notes'), {
+        // Use plain Date object instead of serverTimestamp initially
+        const noteData = {
             userId: currentUser.uid,
             title: title,
             content: content,
-            createdAt: serverTimestamp()
-        });
+            createdAt: new Date() // Changed from serverTimestamp()
+        };
+
+        console.log('Adding note:', noteData); // Debug log
+        
+        const docRef = await addDoc(collection(db, 'notes'), noteData);
+        console.log('Note added with ID:', docRef.id); // Debug log
+        
         showToast('Note added successfully!');
         closeNoteModal();
     } catch (error) {
         console.error('Error adding note:', error);
-        showToast('Failed to add note');
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+        showToast('Failed to add note: ' + error.message);
     } finally {
         hideLoading();
     }
