@@ -682,7 +682,7 @@ function downloadAllNotesAsTxt() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Arc18_Notes_${getDateString()}.txt`;
+    a.download = `arc18_Notes_${getDateString()}.txt`;
     a.click();
     URL.revokeObjectURL(url);
     showToast('All notes downloaded as TXT!');
@@ -701,7 +701,7 @@ function downloadSingleNoteAsPdf(noteId) {
 // Download all notes as PDF
 function downloadAllNotesAsPdf() {
     const content = generatePdfHtml(allNotes);
-    printPdf(content, `Arc18_Notes_${getDateString()}.pdf`);
+    printPdf(content, `arc18_Notes_${getDateString()}.pdf`);
     showToast('All notes downloaded as PDF!');
 }
 
@@ -747,7 +747,7 @@ function generatePdfHtml(notes) {
             </style>
         </head>
         <body>
-            <h1>Arc18 Notes</h1>
+            <h1>arc18 Notes</h1>
     `;
 
     notes.forEach((note, index) => {
