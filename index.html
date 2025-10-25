@@ -3,745 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arc18</title>
-    <meta name="description" content="arc18 is coming soon. Stay tuned for an incredible experience where innovation meets excellence.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-card: #1a1a1a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --accent: #00ff88;
-            --accent-hover: #00cc6a;
-            --gradient: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            line-height: 1.6;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, rgba(255, 0, 255, 0.05) 0%, transparent 50%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Floating Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-
-        /* Main Container */
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 2rem 1rem;
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Logo/Brand */
-        .brand {
-            margin-bottom: 2rem;
-            animation: fadeInDown 1s ease-out;
-            text-align: center;
-            width: 100%;
-        }
-
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 900;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.05em;
-            display: inline-block;
-            position: relative;
-            line-height: 1;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 1; }
-            50% { transform: translateX(-50%) scaleX(1.5); opacity: 0.7; }
-        }
-
-        /* Main Content */
-        .content {
-            text-align: center;
-            max-width: 600px;
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s ease-out 0.3s both;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            max-width: 100%;
-            overflow-wrap: break-word;
-        }
-
-        /* Progress Section */
-        .progress-section {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 1s ease-out 0.6s both;
-            width: 100%;
-            max-width: 500px;
-            box-sizing: border-box;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient);
-            border-radius: 4px;
-            width: 65%;
-            position: relative;
-            overflow: hidden;
-            animation: progressAnimation 2s ease-out;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes progressAnimation {
-            from { width: 0; }
-        }
-
-        /* Email Form */
-        .email-form {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s ease-out 0.9s both;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .email-input {
-            flex: 1;
-            min-width: 250px;
-            padding: 1rem 1.5rem;
-            background: var(--bg-secondary);
-            border: 2px solid transparent;
-            border-radius: 50px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .email-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
-        }
-
-        .email-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .notify-btn {
-            padding: 1rem 2rem;
-            background: var(--gradient);
-            border: none;
-            border-radius: 50px;
-            color: var(--bg-primary);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            min-width: 140px;
-            box-sizing: border-box;
-        }
-
-        .notify-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-        }
-
-        .notify-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Social Links */
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out 1.2s both;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            color: var(--text-secondary);
-            font-size: 1.25rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .social-link:hover {
-            background: var(--gradient);
-            color: var(--bg-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            animation: fadeIn 1s ease-out 1.5s both;
-            width: 100%;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Success Message */
-        .success-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: var(--bg-card);
-            border: 1px solid var(--accent);
-            border-radius: 15px;
-            padding: 1.5rem 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            text-align: center;
-        }
-
-        .success-message.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .success-message i {
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .success-message span {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        /* Skip to main content for accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 6px;
-            background: var(--accent);
-            color: var(--bg-primary);
-            padding: 8px;
-            text-decoration: none;
-            border-radius: 4px;
-            z-index: 100;
-            font-weight: 600;
-        }
-
-        .skip-link:focus {
-            top: 6px;
-        }
-
-        /* Focus styles for accessibility */
-        button:focus,
-        input:focus,
-        .social-link:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem 1rem;
-            }
-
-            .progress-section {
-                padding: 1.5rem;
-                margin-left: 1rem;
-                margin-right: 1rem;
-            }
-
-            .email-form {
-                flex-direction: column;
-                width: 100%;
-                padding: 0 1rem;
-            }
-
-            .email-input {
-                width: 100%;
-            }
-
-            .notify-btn {
-                width: 100%;
-            }
-
-            .social-links {
-                gap: 1rem;
-            }
-
-            .social-link {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
-            }
-
-            .success-message {
-                padding: 1.25rem 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 3rem;
-            }
-
-            h1 {
-                font-size: 1.75rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-                padding: 0 0.5rem;
-            }
-
-            .progress-section {
-                padding: 1.25rem;
-                border-radius: 15px;
-            }
-
-            .email-form {
-                margin-bottom: 2rem;
-            }
-
-            .social-links {
-                margin-bottom: 1.5rem;
-            }
-
-            .success-message {
-                padding: 1rem 1.25rem;
-            }
-        }
-
-        /* High contrast mode support */
-        @media (prefers-contrast: high) {
-            :root {
-                --bg-primary: #000000;
-                --bg-secondary: #111111;
-                --text-secondary: #cccccc;
-            }
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            
-            .bg-animation::before {
-                animation: none;
-            }
-            
-            .particle {
-                animation: none;
-                opacity: 0.3;
-            }
-            
-            .logo::after {
-                animation: none;
-            }
-            
-            .progress-fill::after {
-                animation: none;
-            }
-        }
-    </style>
+    <title>Arc18 - Your Personal Notes</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDK v9+ (Modular) -->
+    <script type="module" src="script.js"></script>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation" aria-hidden="true"></div>
-    <div class="particles" id="particles" aria-hidden="true"></div>
-
-    <!-- Main Container -->
-    <main class="container" id="main-content">
-        <!-- Brand/Logo -->
-        <div class="brand">
-            <h1 class="logo">arc18</h1>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <h1 class="app-title">Arc18</h1>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span class="user-email" id="userEmail"></span>
+                <button class="btn-logout" id="logoutBtn">Logout</button>
+            </div>
         </div>
+    </nav>
 
-        <!-- Content -->
-        <section class="content" aria-labelledby="main-heading">
-            <h1 id="main-heading">Something Amazing is Coming</h1>
-            <p class="subtitle">
-                I'm working hard to bring you an incredible experience. 
-                Stay tuned for the launch of arc18 - the <strong>PERFECT</strong> note making app.
-            </p>
-        </section>
-
-        <!-- Progress Section -->
-        <section class="progress-section" aria-labelledby="progress-heading">
-            <h2 id="progress-heading" class="sr-only">Development Progress</h2>
-            <div class="progress-label">
-                <span>Development Progress</span>
-                <span>77%</span>
+    <!-- Authentication Screen -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-card">
+            <h2 class="auth-title">Welcome to Arc18</h2>
+            <p class="auth-subtitle">Your personal space for thoughts and notes</p>
+            
+            <!-- Tab Navigation -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="loginTab">Login</button>
+                <button class="auth-tab" id="signupTab">Sign Up</button>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </section>
 
-        <!-- Email Form -->
-        <form class="email-form" id="notifyForm" aria-labelledby="form-heading">
-            <h2 id="form-heading" class="sr-only">Get Notified</h2>
-            <input 
-                type="email" 
-                class="email-input" 
-                placeholder="Enter your email address"
-                required
-                aria-required="true"
-                aria-label="Email address"
-            >
-            <button type="submit" class="notify-btn">
-                Notify Me
+            <!-- Login Form -->
+            <form class="auth-form" id="loginForm">
+                <input type="email" class="auth-input" placeholder="Email" id="loginEmail" required>
+                <input type="password" class="auth-input" placeholder="Password" id="loginPassword" required>
+                <button type="submit" class="btn-primary">Login</button>
+                <button type="button" class="btn-forgot" id="forgotPasswordBtn">Forgot Password?</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm" style="display: none;">
+                <input type="text" class="auth-input" placeholder="Full Name" id="signupName" required>
+                <input type="email" class="auth-input" placeholder="Email" id="signupEmail" required>
+                <input type="password" class="auth-input" placeholder="Password (min 6 characters)" id="signupPassword" required>
+                <button type="submit" class="btn-primary">Sign Up</button>
+            </form>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <button class="btn-google" id="googleLoginBtn">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+                    <path d="M9.003 18c2.43 0 4.467-.806 5.956-2.184L12.05 13.56c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z" fill="#34A853"/>
+                    <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                    <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
             </button>
-        </form>
 
-        <!-- Social Links -->
-        <div class="social-links" aria-label="Social media links">
-            <a href="#" class="social-link" aria-label="Twitter">
-                <i class="fab fa-twitter" aria-hidden="true"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="LinkedIn">
-                <i class="fab fa-linkedin" aria-hidden="true"></i>
-            </a>
-            <a href="#" class="social-link" aria-label="Discord">
-                <i class="fab fa-discord" aria-hidden="true"></i>
-            </a>
+            <div class="auth-message" id="authMessage"></div>
         </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Innovation unleashed &copy; 2025</p>
-        </footer>
-    </main>
-
-    <!-- Success Message -->
-    <div class="success-message" id="successMessage" role="alert" aria-live="polite">
-        <i class="fas fa-check-circle" aria-hidden="true"></i>
-        <span>Thank you! I'll notify you when I launch.</span>
     </div>
 
-    <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 25 : 50; // Reduce particles on mobile
+    <!-- Main App Screen -->
+    <div class="app-container" id="appContainer" style="display: none;">
+        
+        <!-- Search and Actions Bar -->
+        <div class="controls-bar">
+            <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Search notes by title or content..." id="searchInput">
+            </div>
+            <div class="action-buttons">
+                <button class="btn-action" id="addNoteBtn">
+                    <span>+</span> New Note
+                </button>
+                <button class="btn-action btn-download" id="downloadAllBtn">
+                    <span>⬇</span> Download All
+                </button>
+            </div>
+        </div>
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
+        <!-- Notes Grid -->
+        <div class="notes-container" id="notesContainer">
+            <div class="empty-state" id="emptyState">
+                <h3>No notes yet</h3>
+                <p>Click "New Note" to create your first note</p>
+            </div>
+        </div>
+    </div>
 
-        // Handle form submission
-        document.getElementById('notifyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = this.querySelector('.email-input').value;
-            const successMessage = document.getElementById('successMessage');
-            
-            // Basic email validation
-            if (!validateEmail(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            // Show success message
-            successMessage.classList.add('show');
-            
-            // Clear form
-            this.reset();
-            
-            // Hide message after 2 seconds
-            setTimeout(() => {
-                successMessage.classList.remove('show');
-            }, 2000);
-            
-            // Here you would typically send the email to your backend
-            console.log('Email submitted:', email);
-        });
+    <!-- Add/Edit Note Modal -->
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">New Note</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="note-title-input" placeholder="Note Title" id="noteTitleInput">
+                <textarea class="note-content-input" placeholder="Write your thoughts..." id="noteContentInput"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelNoteBtn">Cancel</button>
+                <button class="btn-primary" id="saveNoteBtn">Save Note</button>
+            </div>
+        </div>
+    </div>
 
-        // Email validation function
-        function validateEmail(email) {
-            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
+    <!-- Download Options Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Download Notes</h3>
+                <button class="modal-close" id="closeDownloadModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="download-message" id="downloadMessage">Choose format:</p>
+                <div class="download-buttons">
+                    <button class="btn-download-option" id="downloadTxtBtn">Download as TXT</button>
+                    <button class="btn-download-option" id="downloadPdfBtn">Download as PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Add parallax effect on mouse move (only on larger screens)
-        if (window.innerWidth > 768) {
-            document.addEventListener('mousemove', (e) => {
-                const x = e.clientX / window.innerWidth;
-                const y = e.clientY / window.innerHeight;
-                
-                const bgAnimation = document.querySelector('.bg-animation');
-                bgAnimation.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
-            });
-        }
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
 
-        // Initialize particles on load
-        window.addEventListener('load', createParticles);
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
 
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all animated elements
-        document.querySelectorAll('.content, .progress-section, .email-form, .social-links, .footer').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Handle window resize
-        let resizeTimeout;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-                // Recreate particles on resize for better performance
-                const particlesContainer = document.getElementById('particles');
-                particlesContainer.innerHTML = '';
-                createParticles();
-            }, 250);
-        });
-
-        // Add CSS for screen reader only text
-        const style = document.createElement('style');
-        style.textContent = `
-            .sr-only {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                white-space: nowrap;
-                border: 0;
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
 </body>
 </html>
